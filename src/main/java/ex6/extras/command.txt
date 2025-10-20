@@ -1,0 +1,24 @@
+# 0) confirmar ficheiros
+Test-Path 'src\main\java\ex6\extra\keystore.jks'
+Test-Path 'src\main\java\ex6\extra\ficheiro.txt'
+
+# 1) compilar (já está na pasta do ficheiro .java)
+cd :src\main\java\ex6'
+javac .\ex6.java
+
+# 2) assinar (usa caminhos reais, não placeholders)
+java -cp .. ex6.ex6 -sign -sha256 `
+  'src\main\java\ex6\extra\ficheiro.txt' `
+  'src\main\java\ex6\extra\keystore.jks' `
+  password alias
+
+# 3) exportar certificado para verificação
+keytool -exportcert -alias alias `
+  -keystore 'src\main\java\ex6\extra\keystore.jks' `
+  -storepass password -rfc -file 'src\main\java\ex6\extra\cert.cer'
+
+# 4) verificar
+java -cp .. ex6.ex6 -verify -sha256 `
+  'src\main\java\ex6\extra\ficheiro.txt' `
+  'src\main\java\ex6\extra\ficheiro.txt.sig' `
+  'src\main\java\ex6\extra\cert.cer'
