@@ -7,7 +7,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.*;
 import java.security.cert.*;
+import java.security.cert.Certificate;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 
 public class ex6 {
@@ -21,7 +24,7 @@ public class ex6 {
         String sigAlg = digest + "withRSA";                   // "SHA256withRSA"
 
         // Carregar o KeyStore (JKS)
-        KeyStore ks = KeyStore.getInstance("JKS");
+        KeyStore ks = KeyStore.getInstance("PKCS12");
         try (FileInputStream fis = new FileInputStream(keystorePath)) {
             ks.load(fis, keystorePassword.toCharArray());
         }
@@ -31,6 +34,7 @@ public class ex6 {
         if (!(key instanceof PrivateKey)) {
             throw new KeyStoreException("Chave privada não encontrada para o alias: " + keyAlias);
         }
+
         PrivateKey privateKey = (PrivateKey) key;
         if (!"RSA".equalsIgnoreCase(privateKey.getAlgorithm())) {
             throw new InvalidKeyException("A chave não é RSA.");
@@ -58,68 +62,60 @@ public class ex6 {
     }
 
     // Verifica a assinatura de `filePath` com o certificado `certPath` e a assinatura `sigPath`
-    public static boolean verify(String filePath, String sigPath, String certPath, String hashFlag,
-                                 String trustStorePath, String trustStorePassword)
-            throws IOException, CertificateException, NoSuchAlgorithmException, InvalidKeyException,
-            SignatureException, KeyStoreException, CertPathValidatorException, InvalidAlgorithmParameterException {
+    public static boolean verify(String filePath, String signaturePath, String signerCertPath, String intermediateCertPath, String trustStorePath, String trustStorePassword) {
+        try (FileInputStream fileIn = new FileInputStream(filePath);
+             FileInputStream signatureIn = new FileInputStream(signaturePath)) {
 
-        // Validar a Cadeia de Certificação
-        // Carrega o TrustStore que contém os certificados das CAs de confiança
-        KeyStore trustStore = KeyStore.getInstance("JKS");
-        try (FileInputStream fis = new FileInputStream(trustStorePath)) {
-            trustStore.load(fis, trustStorePassword.toCharArray());
-        }
+            // 1. Ler o TrustStore
+            KeyStore ts = KeyStore.getInstance("JKS");
+            ts.load(new FileInputStream(trustStorePath), trustStorePassword.toCharArray());
 
-        // Carrega certificado X.509 (PEM ou DER) do signatário
-        CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
-        X509Certificate signerCert;
-        try (InputStream in = new FileInputStream(certPath)) {
-            signerCert = (X509Certificate) certFactory.generateCertificate(in);
-        }
+            // 2. Ler os certificados para construir a cadeia
+            CertificateFactory cf = CertificateFactory.getInstance("X.509");
 
-        // Verifica se o certificado em si está dentro do seu período de validade
-        signerCert.checkValidity();
+            // Ler o certificado do signatário (Alice)
+            Certificate signerCert = cf.generateCertificate(new FileInputStream(signerCertPath));
 
-        // Configura os parâmetros de validação (PKIX) usando o TrustStore
-        PKIXParameters params = new PKIXParameters(trustStore);
-        // A verificação de revogação (CRL/OCSP) é complexa e desativada para este exercício
-        params.setRevocationEnabled(false);
+            // Ler o certificado da CA Intermédia
+            Certificate intermediateCert = cf.generateCertificate(new FileInputStream(intermediateCertPath));
 
-        // Constroi o caminho de certificação a partir do certificado e valida-o
-        CertPath validationPath = certFactory.generateCertPath(Collections.singletonList(signerCert));
-        CertPathValidator validator = CertPathValidator.getInstance("PKIX");
-        try {
-            validator.validate(validationPath, params);
-            System.out.println("A cadeia de certificação é válida.");
-        } catch (CertPathValidatorException | InvalidAlgorithmParameterException e) {
-            // Se a validação falhar, o processo para aqui.
-            System.err.println("A validação da cadeia de certificação falhou: " + e.getMessage());
-            throw e;
-        }
+            // Construir a cadeia de certificação: [signatário, intermédia]
+            List<Certificate> certChainList = new java.util.ArrayList<>();
+            certChainList.add(signerCert);
+            certChainList.add(intermediateCert);
 
-        // Verificar a Assinatura Digital
-        String digest = normalizeHash(hashFlag);
-        String sigAlg = digest + "withRSA";
+            CertPath certPath = cf.generateCertPath(certChainList);
 
-        // Reutiliza o certificado já carregado e validado
-        if (!"RSA".equalsIgnoreCase(signerCert.getPublicKey().getAlgorithm())) {
-            throw new InvalidKeyException("A chave pública do certificado não é RSA.");
-        }
-
-        Signature signature = Signature.getInstance(sigAlg);
-        // Usar a chave pública do 'signerCert', não do objeto 'signature'
-        signature.initVerify(signerCert.getPublicKey());
-
-        try (InputStream is = Files.newInputStream(Path.of(filePath))) {
-            byte[] buf = new byte[8192];
-            int n;
-            while ((n = is.read(buf)) > 0) {
-                signature.update(buf, 0, n);
+            // 3. Validar a cadeia de certificação
+            try {
+                CertPathValidator cpv = CertPathValidator.getInstance("PKIX");
+                PKIXParameters params = new PKIXParameters(ts);
+                params.setRevocationEnabled(false); // Simplificação para o trabalho
+                cpv.validate(certPath, params);
+                System.out.println("A cadeia de certificação é válida.");
+            } catch (java.security.cert.CertPathValidatorException e) {
+                System.out.println("A validação da cadeia de certificação falhou: " + e.getMessage());
+                return false;
             }
-        }
 
-        byte[] sigBytes = Files.readAllBytes(Path.of(sigPath));
-        return signature.verify(sigBytes);
+            // 4. Se a cadeia for válida, verificar a assinatura
+            Signature signature = Signature.getInstance("SHA256withRSA"); // Assumindo SHA256
+            signature.initVerify(signerCert.getPublicKey());
+
+            byte[] buffer = new byte[8192];
+            int n;
+            while ((n = fileIn.read(buffer)) != -1) {
+                signature.update(buffer, 0, n);
+            }
+
+            byte[] signatureBytes = signatureIn.readAllBytes();
+            return signature.verify(signatureBytes);
+
+        } catch (Exception e) {
+            System.err.println("Erro: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private static String normalizeHash(String flag) {
@@ -146,8 +142,13 @@ public class ex6 {
                     System.out.println("Assinatura gerada em: " + args[2] + ".sig");
                     break;
                 case "-verify":
-                    if (args.length != 7) { usage(); return; }
-                    boolean ok = verify(args[2], args[3], args[4], args[1], args[5], args[6]);
+                    // 7 argumentos: -verify, -sha256, file, sig, cert, interm-cert, truststore, pass
+                    if (args.length != 8) {
+                        usage();
+                        return;
+                    }
+                    // ndices dos argumentos: 2, 3, 4, 5, 6, 7
+                    boolean ok = verify(args[2], args[3], args[4], args[5], args[6], args[7]);
                     System.out.println(ok ? "Assinatura válida" : "Assinatura inválida");
                     break;
                 default:
