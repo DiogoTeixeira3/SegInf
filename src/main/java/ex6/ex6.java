@@ -19,45 +19,63 @@ public class ex6 {
             throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException,
             UnrecoverableKeyException, InvalidKeyException, SignatureException {
 
-        // Selecionar o algoritmo de assinatura (SHA1withRSA|SHA256withRSA)
-        String digest = normalizeHash(hashFlag);              // "SHA1" | "SHA256"
-        String sigAlg = digest + "withRSA";                   // "SHA256withRSA"
+        // === 1. Selecionar o algoritmo de assinatura ===
+        // A assinatura digital é uma combinação de uma função de hash com um algoritmo assimétrico.
+        // Exemplo: SHA256withRSA → primeiro aplica SHA-256 ao ficheiro e depois cifra o hash com a chave privada RSA.
+        String digest = normalizeHash(hashFlag);   // Converte "-sha1" → "SHA1", "-sha256" → "SHA256"
+        String sigAlg = digest + "withRSA";        // Forma final do algoritmo: "SHA256withRSA"
 
-        // Carregar o KeyStore (JKS)
+        // === 2. Carregar o keystore que contém a chave privada ===
+        // Cria um objeto KeyStore do tipo PKCS12 (formato moderno e compatível com .p12/.pfx)
         KeyStore ks = KeyStore.getInstance("PKCS12");
+
+        // Abre o ficheiro e carrega o keystore na memória, usando a password indicada
         try (FileInputStream fis = new FileInputStream(keystorePath)) {
             ks.load(fis, keystorePassword.toCharArray());
         }
 
-        // Obter a chave privada RSA do alias e validar
+        // === 3. Obter a chave privada associada ao alias indicado ===
+        // A chave será usada para gerar a assinatura.
         Key key = ks.getKey(keyAlias, keystorePassword.toCharArray());
+
+        // Verifica se o alias contém de facto uma chave privada
         if (!(key instanceof PrivateKey)) {
             throw new KeyStoreException("Chave privada não encontrada para o alias: " + keyAlias);
         }
 
         PrivateKey privateKey = (PrivateKey) key;
+
+        // Confirma que a chave é RSA, pois outros tipos (ex: EC) não são suportados aqui
         if (!"RSA".equalsIgnoreCase(privateKey.getAlgorithm())) {
             throw new InvalidKeyException("A chave não é RSA.");
         }
 
-        // Criar e inicializar o objeto Signature com a chave privada
+        // === 4. Criar e inicializar o objeto Signature ===
+        // A classe Signature combina o algoritmo de hash e a operação de cifra da assinatura.
         Signature signature = Signature.getInstance(sigAlg);
+
+        // Inicializa o objeto em modo "sign" com a chave privada e um gerador de aleatoriedade seguro.
         signature.initSign(privateKey, new SecureRandom());
 
-
-        // Ler ficheiro e atualizar sign
-        // Leitura em streaming
+        // === 5. Ler o ficheiro e atualizar o cálculo da assinatura ===
+        // O ficheiro é processado em blocos (streaming) para suportar ficheiros grandes.
         Path path = Path.of(filePath);
         try (InputStream is = Files.newInputStream(path)) {
-            byte[] buf = new byte[8192];
+            byte[] buf = new byte[8192];  // buffer de 8 KB
             int n;
             while ((n = is.read(buf)) > 0) {
+                // Para cada bloco lido, atualiza o objeto Signature com esses bytes
                 signature.update(buf, 0, n);
             }
         }
 
-        // Gerar a assinatura e gravá-la em ficheiro
+        // === 6. Gerar a assinatura digital ===
+        // Neste momento, o hash completo já foi calculado internamente;
+        // a função sign() aplica a operação RSA sobre o hash.
         byte[] digitalSignature = signature.sign();
+
+        // === 7. Guardar a assinatura em ficheiro ===
+        // A assinatura resultante (em binário) é escrita num novo ficheiro com o mesmo nome + ".sig"
         Files.write(Path.of(filePath + ".sig"), digitalSignature);
     }
 

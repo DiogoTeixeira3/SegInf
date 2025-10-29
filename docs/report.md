@@ -182,4 +182,41 @@ exec2 = 0,584s
 exec3 = 0,491s
 tempo médio = 0,518
 
-4.3 - Se um ataque permitisse encontrar colisões em todos os 256 bits do SHA‑256, o uso desta função num esquema de assinatura digital teria consequências graves. Em particular, um atacante poderia gerar pares de mensagens m e m′ tais que SHA-256(m) = SHA-256(m′). Se o atacante convencer a vítima a assinar m, a assinatura resultante seria igualmente válida para m′, permitindo a falsificação de assinaturas. Assim, a autenticidade fica comprometida — não é possível garantir a entidade envolvida é quem diz ser  — e a integridade também é posta em causa, pois assinaturas válidas poderiam ser reutilizadas para documentos manipulados.
+4.3 - Se um ataque permitisse encontrar colisões em todos os 256 bits do SHA‑256, o uso desta função num esquema de assinatura digital teria consequências graves. 
+Em particular, um atacante poderia gerar pares de mensagens m e m′ tais que SHA-256(m) = SHA-256(m′). 
+Se o atacante convencer a vítima a assinar m, a assinatura resultante seria igualmente válida para m′, permitindo a falsificação de assinaturas. 
+Assim, a autenticidade fica comprometida — não é possível garantir a entidade envolvida é quem diz ser  — e a integridade também é posta em causa, pois assinaturas válidas poderiam ser reutilizadas para documentos manipulados.
+
+### 5.2 – Solução sem canal seguro para troca de chaves
+
+Na alínea anterior, a chave simétrica `k` tinha de ser enviada por um canal seguro.  
+Para eliminar essa necessidade, utiliza-se um **esquema híbrido**, combinando cifra simétrica e assimétrica:
+
+1. O emissor gera uma **chave simétrica aleatória** `k` (ex.: AES-128).
+2. Cifra a mensagem com **AES/CBC** e autentica com **HMAC-SHA256**:
+
+   \[
+   AE(k)(m) = E_k(m) \, || \, T_k(E_k(m))
+   \]
+
+3. Cifra a chave `k` com a **chave pública RSA** do recetor:
+
+   \[
+   k_{enc} = E_{RSA}(K_{pub}, k)
+   \]
+
+4. Envia ao recetor:
+
+   \[
+   k_{enc} \, || \, AE(k)(m)
+   \]
+
+5. O recetor usa a sua **chave privada RSA** para obter `k` e decifrar a mensagem.
+
+A definição modificada torna-se:
+
+\[
+AE^{*}(K_{pub})(m) = E_{RSA}(K_{pub}, k) \, || \, E_k(m) \, || \, T_k(E_k(m))
+\]
+
+> 💡 Desta forma, já **não é necessário um canal seguro**, pois a chave simétrica é protegida pela chave pública do recetor.

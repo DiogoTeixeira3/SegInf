@@ -39,37 +39,59 @@ public class ex5 {
     public static void cipher(String inputFilePath, String outputFilePath, String keyFilePath)
             throws GeneralSecurityException, IOException {
 
-        // Carrega a chave partilhada do ficheiro.
+        // === 1. Carregar a chave simétrica ===
+        // Lê os bytes do ficheiro de chave e cria um objeto SecretKey para AES.
         byte[] keyBytes = Files.readAllBytes(Path.of(keyFilePath));
         SecretKey secretKey = new SecretKeySpec(keyBytes, "AES");
 
-        // Prepara a cifra AES e o MAC com a mesma chave.
+        // === 2. Preparar a cifra AES ===
+        // Cria a instância de Cipher com o algoritmo especificado (ex: "AES/CBC/PKCS5Padding").
         Cipher cipher = Cipher.getInstance(CIPHER_ALG);
+        // Inicializa o Cipher no modo de cifra com a chave simétrica.
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        // Obtém o vetor de inicialização (IV) gerado aleatoriamente.
         byte[] iv = cipher.getIV();
 
+        // === 3. Preparar o MAC (HMAC-SHA256) ===
+        // Cria e inicializa o MAC com a mesma chave.
         Mac mac = Mac.getInstance(MAC_ALG);
         mac.init(secretKey);
+        // Atualiza o MAC com o IV, para que também seja protegido.
         mac.update(iv); // O MAC também protege o IV.
 
-        // Usa streams para cifrar, calcular MAC e codificar em Base64, tudo de uma vez.
+        // === 4. Cifrar o ficheiro e escrever em Base64 ===
         try (
                 InputStream in = new FileInputStream(inputFilePath);
                 FileOutputStream fos = new FileOutputStream(outputFilePath);
-                OutputStream base64Out = Base64.getEncoder().wrap(fos);
-                MacUpdatingOutputStream macOut = new MacUpdatingOutputStream(base64Out, mac);
-                CipherOutputStream cos = new CipherOutputStream(macOut, cipher)
+                OutputStream base64Out = Base64.getEncoder().wrap(fos)
         ) {
+            // Escreve o IV no início do ficheiro cifrado.
             base64Out.write(iv);
-            in.transferTo(cos); // Os dados fluem do ficheiro -> cifra -> mac -> base64 -> ficheiro de saída.
+
+            // Lê todo o ficheiro de entrada para memória (mantendo estrutura simples)
+            byte[] plainData = in.readAllBytes();
+
+            // Cifra os dados com AES
+            byte[] encryptedData = cipher.doFinal(plainData);
+
+            // Atualiza o MAC com os dados cifrados
+            mac.update(encryptedData);
+
+            // Escreve os dados cifrados em Base64
+            base64Out.write(encryptedData);
         }
 
-        // Finaliza o MAC e anexa-o ao final do ficheiro.
+        // === 5. Finalizar o MAC ===
+        // Calcula o valor final do HMAC (tag de autenticação).
         byte[] macTag = mac.doFinal();
+
+        // === 6. Escrever a tag no final do ficheiro ===
+        // Abre o ficheiro cifrado em modo "append" e escreve a tag codificada em Base64.
         try (OutputStream fos = new FileOutputStream(outputFilePath, true)) {
             fos.write(Base64.getEncoder().encode(macTag));
         }
 
+        // === 7. Mensagem final ===
         System.out.println("Ficheiro cifrado e guardado em: " + outputFilePath);
     }
 
