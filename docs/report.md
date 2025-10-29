@@ -189,34 +189,79 @@ Assim, a autenticidade fica comprometida — não é possível garantir a entida
 
 ### 5.2 – Solução sem canal seguro para troca de chaves
 
-Na alínea anterior, a chave simétrica `k` tinha de ser enviada por um canal seguro.  
-Para eliminar essa necessidade, utiliza-se um **esquema híbrido**, combinando cifra simétrica e assimétrica:
+Na alínea anterior, o esquema de cifra autenticada utilizava uma chave simétrica `k` partilhada entre as duas partes.  
+Essa chave tinha de ser previamente transmitida por um **canal seguro**, o que é uma limitação prática, já que exige confiança e proteção durante a transmissão.
 
-1. O emissor gera uma **chave simétrica aleatória** `k` (ex.: AES-128).
-2. Cifra a mensagem com **AES/CBC** e autentica com **HMAC-SHA256**:
+Para eliminar essa necessidade, pode-se recorrer a um **esquema híbrido de criptografia**, que combina **cifra simétrica** (para proteger a mensagem) com **cifra assimétrica** (para proteger a chave simétrica).  
+Esta abordagem é amplamente usada em sistemas reais, como TLS/HTTPS e PGP.
 
-   \[
-   AE(k)(m) = E_k(m) \, || \, T_k(E_k(m))
-   \]
+---
 
-3. Cifra a chave `k` com a **chave pública RSA** do recetor:
+#### 🔐 Etapas do processo
 
-   \[
-   k_{enc} = E_{RSA}(K_{pub}, k)
-   \]
+1. **Geração da chave simétrica**
+    - O emissor (Alice) gera uma chave `k` aleatória, por exemplo, uma chave AES de 128 ou 256 bits.
+    - Esta chave é temporária e serve apenas para cifrar a mensagem atual.
 
-4. Envia ao recetor:
+2. **Proteção da mensagem**
+    - A mensagem `m` é cifrada e autenticada segundo o esquema definido em 5.1:
+      \[
+      AE(k)(m) = E_k(m) \, || \, T_k(E_k(m))
+      \]
+    - Onde:
+        - `E_k(m)` → cifra simétrica AES em modo CBC com padding PKCS#5 (confidencialidade);
+        - `T_k(E_k(m))` → HMAC-SHA256 aplicado ao texto cifrado (autenticidade e integridade).
 
-   \[
-   k_{enc} \, || \, AE(k)(m)
-   \]
+3. **Proteção da chave simétrica**
+    - A chave `k` é cifrada com a **chave pública RSA** do recetor (Bob):
+      \[
+      k_{enc} = E_{RSA}(K_{pub}, k)
+      \]
+    - Apenas Bob, que possui a chave privada correspondente, conseguirá recuperar `k`.
 
-5. O recetor usa a sua **chave privada RSA** para obter `k` e decifrar a mensagem.
+4. **Envio da mensagem protegida**
+    - Alice envia para Bob a concatenação dos dois elementos:
+      \[
+      \text{Mensagem protegida} = k_{enc} \, || \, AE(k)(m)
+      \]
+    - Assim, tanto a chave como a mensagem viajam cifradas e autenticadas.
 
-A definição modificada torna-se:
+5. **Receção e decifra**
+    - Bob usa a sua chave privada RSA para recuperar `k`:
+      \[
+      k = D_{RSA}(K_{priv}, k_{enc})
+      \]
+    - Depois utiliza `k` para:
+        - verificar o HMAC-SHA256 (`T_k`),
+        - e decifrar o texto cifrado com AES/CBC, obtendo a mensagem original `m`.
+
+---
+
+#### 📘 Nova definição do esquema
+
+Com esta alteração, a definição do esquema de cifra autenticada passa a ser:
 
 \[
 AE^{*}(K_{pub})(m) = E_{RSA}(K_{pub}, k) \, || \, E_k(m) \, || \, T_k(E_k(m))
 \]
 
-> 💡 Desta forma, já **não é necessário um canal seguro**, pois a chave simétrica é protegida pela chave pública do recetor.
+Onde:
+- `E_{RSA}(K_{pub}, k)` → cifra a chave simétrica com a chave pública do recetor;
+- `E_k(m)` → cifra a mensagem com AES/CBC;
+- `T_k(E_k(m))` → gera a tag de autenticação HMAC-SHA256.
+
+---
+
+#### 💡 Vantagens do esquema híbrido
+
+- **Não requer canal seguro**: a chave simétrica viaja cifrada com RSA.
+- **Confidencialidade e integridade garantidas**: AES e HMAC continuam a proteger o conteúdo.
+- **Eficiência**: a parte “pesada” (RSA) é aplicada apenas à pequena chave AES, e não à mensagem inteira.
+- **Escalabilidade**: cada sessão pode usar uma chave AES nova (chave de sessão), aumentando a segurança.
+
+---
+
+#### ✅ Conclusão
+
+A modificação proposta substitui o envio direto da chave `k` por um processo de **encapsulamento de chave (key encapsulation)** usando criptografia assimétrica.  
+Desta forma, o emissor pode enviar tanto a chave simétrica como a mensagem cifrada **sem necessidade de canal seguro**, mantendo todas as propriedades de segurança exigidas: confidencialidade, integridade e autenticidade.

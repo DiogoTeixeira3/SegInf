@@ -30,12 +30,14 @@ public class ex6 {
         KeyStore ks = KeyStore.getInstance("PKCS12");
 
         // Abre o ficheiro e carrega o keystore na memória, usando a password indicada
+        // Lê de um ficheiro e carrega
         try (FileInputStream fis = new FileInputStream(keystorePath)) {
             ks.load(fis, keystorePassword.toCharArray());
         }
 
         // === 3. Obter a chave privada associada ao alias indicado ===
         // A chave será usada para gerar a assinatura.
+        // Sacar a key
         Key key = ks.getKey(keyAlias, keystorePassword.toCharArray());
 
         // Verifica se o alias contém de facto uma chave privada
@@ -52,13 +54,16 @@ public class ex6 {
 
         // === 4. Criar e inicializar o objeto Signature ===
         // A classe Signature combina o algoritmo de hash e a operação de cifra da assinatura.
+        // Cria um objeto em que especificas o algoritmo
         Signature signature = Signature.getInstance(sigAlg);
 
         // Inicializa o objeto em modo "sign" com a chave privada e um gerador de aleatoriedade seguro.
+        // Assina e faz o hash
         signature.initSign(privateKey, new SecureRandom());
 
         // === 5. Ler o ficheiro e atualizar o cálculo da assinatura ===
         // O ficheiro é processado em blocos (streaming) para suportar ficheiros grandes.
+        // Calcula o hash
         Path path = Path.of(filePath);
         try (InputStream is = Files.newInputStream(path)) {
             byte[] buf = new byte[8192];  // buffer de 8 KB
