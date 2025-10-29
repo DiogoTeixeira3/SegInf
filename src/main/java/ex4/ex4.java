@@ -11,7 +11,7 @@ public class ex4 {
     public static void main(String[] args) throws Exception {
 
         // === 1. Ler os ficheiros GoodApp.java e BadApp.java ===
-        // Lê todo o conteúdo de cada ficheiro como um vetor de bytes.
+        // Lê por completo o conteúdo de cada ficheiro como um vetor de bytes.
         byte[] good = Files.readAllBytes(Path.of("GoodApp.java"));
         byte[] bad = Files.readAllBytes(Path.of("BadApp.java"));
 
