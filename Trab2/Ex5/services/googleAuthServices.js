@@ -22,8 +22,6 @@ exports.exchangeCodeForTokens = async function (code) {
         { headers: form.getHeaders() }
     );
 
-    console.log("TOKEN RESPONSE RECEBIDO ====>", response.data);
-
     return response.data;
 };
 

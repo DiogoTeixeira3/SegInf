@@ -59,3 +59,18 @@ exports.callback = async (req, res) => {
         res.status(500).send("Erro no callback Google");
     }
 };
+
+exports.logout = (req, res) => {
+    const sid = req.cookies["session-id"];
+
+    if (sid) {
+        // remover sessão do store
+        sessionStore.delete(sid);
+    }
+
+    // apagar cookie
+    res.clearCookie("session-id");
+
+    // voltar para home
+    res.redirect('/');
+};

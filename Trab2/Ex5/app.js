@@ -1,8 +1,13 @@
+
 require('dotenv').config();
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+
+const authRoutes = require('./routes/authRoutes');
+const sessionStore = require('./stores/sessionStore');
+const githubRoutes = require('./routes/githubRoutes');
 
 // Criar app Express
 const app = express();
@@ -23,10 +28,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Rotas
-const authRoutes = require('./routes/authRoutes');
 app.use('/auth', authRoutes);
 
-const sessionStore = require('./stores/sessionStore');
+app.use('/github', githubRoutes);
 
 app.get('/', (req, res) => {
     const sid = req.cookies["session-id"];
@@ -34,7 +38,6 @@ app.get('/', (req, res) => {
 
     res.render('home', { user });
 });
-
 // Levantar servidor
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

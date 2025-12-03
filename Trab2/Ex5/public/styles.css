@@ -279,3 +279,61 @@ a:hover {
         padding: 1.6rem 1.2rem;
     }
 }
+
+/* LISTA DE REPOSITÓRIOS */
+.repo-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.repo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 20px;
+    margin-bottom: 12px;
+
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+
+    transition: 0.2s;
+}
+
+.repo-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(3px);
+}
+
+/* Nome do repo */
+.repo-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+/* Tags PUBLIC/PRIVATE */
+.tag {
+    padding: 3px 8px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    margin-left: 6px;
+}
+
+.tag-green {
+    background-color: rgba(0, 200, 120, 0.25);
+    color: #5ee6a3;
+}
+
+.tag-red {
+    background-color: rgba(255, 80, 80, 0.25);
+    color: #ff8080;
+}
+
+/* Botão pequeno */
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}

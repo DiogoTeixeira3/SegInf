@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>GitHub · GitTasks</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="page">
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">GitTasks</div>
+        <nav class="nav">
+            <% if (user) { %>
+                <span class="nav-user">Olá, <strong><%= user.name %></strong></span>
+                <span class="role-badge role-<%= user.role %>"><%= user.role %></span>
+                <a href="/" class="nav-link">Home</a>
+                <a href="/logout" class="btn btn-outline">Logout</a>
+            <% } else { %>
+                <a href="/auth/login" class="btn btn-primary">Login com Google</a>
+            <% } %>
+        </nav>
+    </header>
+
+    <!-- Main -->
+    <main class="main">
+
+        <section class="card">
+            <h1>Os teus repositórios GitHub</h1>
+
+            <% if (!repos || repos.length === 0) { %>
+
+                <p class="muted">Nenhum repositório encontrado.</p>
+
+            <% } else { %>
+
+                <ul class="repo-list">
+                    <% repos.forEach(repo => { %>
+                        <li class="repo-item">
+
+                            <div class="repo-left">
+
+                                <span class="repo-name"><%= repo.name %></span>
+                                <% if (repo.private) { %>
+                                    <span class="tag tag-red">PRIVATE</span>
+                                <% } else { %>
+                                    <span class="tag tag-green">PUBLIC</span>
+                                <% } %>
+
+                            </div>
+
+                            <div class="repo-right">
+                                <a href="/github/<%= repo.name %>/milestones"
+                                   class="btn btn-sm btn-primary">
+                                    Ver milestones
+                                </a>
+                            </div>
+
+                        </li>
+                    <% }) %>
+                </ul>
+
+            <% } %>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p class="muted">SegInf · ISEL · GitTasks</p>
+    </footer>
+
+</div>
+</body>
+</html>
