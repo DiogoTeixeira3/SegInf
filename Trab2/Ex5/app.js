@@ -1,30 +1,41 @@
+require('dotenv').config();
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 
+// Criar app Express
 const app = express();
-const PORT = 8080;
 
-// Configurar EJS + pasta de views
-app.set('view engine', 'ejs');
-app.set('views', './views');
+// PORT
+const PORT = process.env.PORT;
 
-// Middleware básico
-app.use(express.static('public'));
-
+// Middlewares globais
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+// Configurar views
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+// Servir ficheiros estáticos
+app.use(express.static(path.join(__dirname, 'public')));
 
+// Rotas
+const authRoutes = require('./routes/authRoutes');
+app.use('/auth', authRoutes);
+
+const sessionStore = require('./stores/sessionStore');
 
 app.get('/', (req, res) => {
-    const user = req.cookies["session-id"]
-        ? { name: "Utilizador", role: "free" } // provisório, depois ligamos ao sessionStore
-        : null;
+    const sid = req.cookies["session-id"];
+    const user = sessionStore.get(sid);
 
     res.render('home', { user });
+});
+
+// Levantar servidor
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
 });

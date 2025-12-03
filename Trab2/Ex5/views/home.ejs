@@ -16,7 +16,7 @@
                 <a href="/github" class="nav-link">Milestones</a>
                 <a href="/logout" class="btn btn-outline">Logout</a>
             <% } else { %>
-                <a href="/login" class="btn btn-primary">Login com Google</a>
+                <a href="/auth/login" class="btn btn-primary">Login com Google</a>
             <% } %>
         </nav>
     </header>
@@ -30,7 +30,7 @@
             </p>
 
             <% if (!user) { %>
-                <a href="/login" class="btn btn-primary btn-lg">Começar com Google</a>
+                <a href="/auth/login" class="btn btn-primary btn-lg">Começar com Google</a>
             <% } else { %>
                 <a href="/github" class="btn btn-primary btn-lg">Ver milestones</a>
             <% } %>
