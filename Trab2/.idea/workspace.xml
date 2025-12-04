@@ -4,17 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f91828a-f5a7-47e4-910a-5743a9cb832b" name="Changes" comment="Login with Google Authentication">
-      <change afterPath="$PROJECT_DIR$/Ex5/controllers/githubController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ex5/routes/githubRoutes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ex5/views/github.ejs" afterDir="false" />
+    <list default="true" id="5f91828a-f5a7-47e4-910a-5743a9cb832b" name="Changes" comment="Logout, Github and Milestones Done">
+      <change afterPath="$PROJECT_DIR$/Ex5/controllers/taskController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex5/middleware/tempSession.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex5/routes/taskRoutes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex5/views/selectList.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex5/views/taskSuccess.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ex5/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ex5/controllers/authControllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/controllers/authControllers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ex5/middleware/authMiddleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/middleware/authMiddleware.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ex5/public/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/public/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ex5/routes/authRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/routes/authRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ex5/services/googleAuthServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/services/googleAuthServices.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex5/views/milestones.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/views/milestones.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,26 +51,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Node.js.app.js.executor": "Run",
-    "Node.js.authRoutes.js.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/pinto/Documents/5_semestre/SegInf/Trab/Trab2",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2024.3.4.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Node.js.app.js.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.authRoutes.js.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/pinto/Documents/5_semestre/SegInf/Trab/Trab2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2024.3.4.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\pinto\Documents\5_semestre\SegInf\Trab\Trab2\Ex5\middleware" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -91,7 +96,8 @@
       <workItem from="1764712649685" duration="9000" />
       <workItem from="1764712672497" duration="321000" />
       <workItem from="1764717741847" duration="15000" />
-      <workItem from="1764754011483" duration="24081000" />
+      <workItem from="1764754011483" duration="24302000" />
+      <workItem from="1764839052155" duration="9441000" />
     </task>
     <task id="LOCAL-00001" summary="Login with Google Authentication">
       <option name="closed" value="true" />
@@ -109,7 +115,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764777214493</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Logout, Github and Milestones Done">
+      <option name="closed" value="true" />
+      <created>1764802645586</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1764802645586</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -117,6 +131,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Login with Google Authentication" />
-    <option name="LAST_COMMIT_MESSAGE" value="Login with Google Authentication" />
+    <MESSAGE value="Logout, Github and Milestones Done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Logout, Github and Milestones Done" />
   </component>
 </project>

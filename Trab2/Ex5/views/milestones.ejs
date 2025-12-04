@@ -44,14 +44,32 @@
                             </div>
 
                             <div class="repo-right">
-                                <form action="/tasks/create" method="POST">
-                                    <input type="hidden" name="repo" value="<%= repo %>">
-                                    <input type="hidden" name="title" value="<%= m.title %>">
-                                    <input type="hidden" name="due" value="<%= m.due_on %>">
-                                    <button class="btn btn-sm btn-primary" type="submit">
-                                        Criar Task
-                                    </button>
-                                </form>
+                                <% if (user.role === 'premium') { %>
+                                    <div class="task-list-select">
+                                        <label>Lista de Tarefas:</label>
+
+                                        <select class="taskListSelect" name="listId">
+                                            <!-- será preenchido via JavaScript -->
+                                        </select>
+
+                                        <button type="button" class="btn btn-outline btn-sm createListBtn">
+                                            Criar lista nova
+                                        </button>
+                                    </div>
+                                <% } %>
+
+                                    <form action="/tasks/select-list" method="POST">
+                                        <input type="hidden" name="repo" value="<%= repo %>">
+                                        <input type="hidden" name="title" value="<%= m.title %>">
+                                        <input type="hidden" name="due" value="<%= m.due_on %>">
+
+                                        <button class="btn btn-sm btn-primary" type="submit">
+                                            Criar Task
+                                        </button>
+                                    </form>
+
+
+
                             </div>
 
                         </li>

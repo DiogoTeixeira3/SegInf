@@ -14,7 +14,7 @@ exports.login = (req, res) => {
         'https://accounts.google.com/o/oauth2/v2/auth?' +
         'client_id=' + process.env.CLIENT_ID + '&' +
         'response_type=code&' +
-        'scope=openid%20email%20profile&' +
+        'scope=openid%20email%20profile%20https://www.googleapis.com/auth/tasks&' +
         'redirect_uri=http://localhost:' + PORT + '/auth/callback&' +
         'state=xyz123';
 

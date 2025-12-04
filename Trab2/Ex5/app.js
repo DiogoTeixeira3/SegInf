@@ -8,6 +8,7 @@ const path = require('path');
 const authRoutes = require('./routes/authRoutes');
 const sessionStore = require('./stores/sessionStore');
 const githubRoutes = require('./routes/githubRoutes');
+const taskRoutes = require('./routes/taskRoutes');
 
 // Criar app Express
 const app = express();
@@ -19,6 +20,8 @@ const PORT = process.env.PORT;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(require("./middleware/tempSession"));
+
 
 // Configurar views
 app.set('view engine', 'ejs');
@@ -38,6 +41,9 @@ app.get('/', (req, res) => {
 
     res.render('home', { user });
 });
+
+app.use('/tasks', taskRoutes);
+
 // Levantar servidor
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
