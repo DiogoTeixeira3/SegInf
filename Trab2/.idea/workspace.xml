@@ -4,21 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f91828a-f5a7-47e4-910a-5743a9cb832b" name="Changes" comment="Google task creation done">
-      <change afterPath="$PROJECT_DIR$/Ex5/casbin/casbin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ex5/casbin/model.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ex5/casbin/policy.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ex5/middleware/authorize.js" afterDir="false" />
+    <list default="true" id="5f91828a-f5a7-47e4-910a-5743a9cb832b" name="Changes" comment="Search for github repository done">
+      <change afterPath="$PROJECT_DIR$/Ex5/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ex5/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ex5/routes/authRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/routes/authRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex5/controllers/githubController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/controllers/githubController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ex5/routes/githubRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/routes/githubRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ex5/routes/taskRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/routes/taskRoutes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ex5/views/github.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/views/github.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ex5/views/home.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/views/home.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ex5/views/milestones.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/views/milestones.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ex5/views/selectList.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/views/selectList.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ex5/views/taskSuccess.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/views/taskSuccess.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +95,10 @@
       <workItem from="1764754011483" duration="24302000" />
       <workItem from="1764839052155" duration="10406000" />
       <workItem from="1765319448232" duration="3163000" />
-      <workItem from="1765358693741" duration="685000" />
+      <workItem from="1765358693741" duration="1236000" />
+      <workItem from="1765362081466" duration="288000" />
+      <workItem from="1765370468013" duration="700000" />
+      <workItem from="1765402852963" duration="1537000" />
     </task>
     <task id="LOCAL-00001" summary="Login with Google Authentication">
       <option name="closed" value="true" />
@@ -137,7 +132,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764854024818</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Model RBAC implemented and some bugs fixed">
+      <option name="closed" value="true" />
+      <created>1765359648467</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1765359648467</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -147,6 +150,8 @@
     <MESSAGE value="Login with Google Authentication" />
     <MESSAGE value="Logout, Github and Milestones Done" />
     <MESSAGE value="Google task creation done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Google task creation done" />
+    <MESSAGE value="Model RBAC implemented and some bugs fixed" />
+    <MESSAGE value="Search for github repository done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Search for github repository done" />
   </component>
 </project>

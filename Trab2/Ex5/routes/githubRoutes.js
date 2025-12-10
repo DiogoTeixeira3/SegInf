@@ -14,6 +14,14 @@ router.get(
     githubController.listRepos
 );
 
+router.get(
+    '/search',
+    requireAuth,
+    authorize("milestones", "read"),
+    githubController.searchRepos
+);
+
+
 // Ver milestones (free, regular, premium podem ver)
 router.get(
     '/:repo/milestones',

@@ -30,7 +30,7 @@ exports.getMilestones = async (req, res) => {
 
     try {
         const response = await axios.get(
-            `https://api.github.com/repos/${GITHUB_USER}/${repo}/milestones`
+            `https://api.github.com/repos/${repo}/milestones`
         );
 
         const milestones = response.data;
@@ -42,3 +42,29 @@ exports.getMilestones = async (req, res) => {
         res.status(500).send("Erro ao obter milestones do GitHub");
     }
 };
+
+exports.searchRepos = async (req, res) => {
+    const query = req.query.q;
+
+    if (!query) {
+        return res.render("github", { user: req.user, repos: [] });
+    }
+
+    try {
+        const response = await axios.get(
+            `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}`
+        );
+
+        const repos = response.data.items || [];
+
+        res.render("github", {
+            user: req.user,
+            repos
+        });
+
+    } catch (err) {
+        console.error("Erro ao pesquisar repositórios:", err?.response?.data || err);
+        res.status(500).send("Erro ao pesquisar repositórios");
+    }
+};
+

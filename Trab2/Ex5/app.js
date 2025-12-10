@@ -35,7 +35,6 @@ app.set('views', path.join(__dirname, 'views'));
 (async () => {
     app.locals.enforcer = await setupCasbin();
 })();
-
 app.get('/', (req, res) => {
     const sid = req.cookies["session-id"];
     const user = sessionStore.get(sid);
