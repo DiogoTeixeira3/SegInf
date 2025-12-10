@@ -3,9 +3,23 @@ const router = express.Router();
 
 const { requireAuth } = require('../middleware/authMiddleware');
 const githubController = require('../controllers/githubController');
+const authorize = require("../middleware/authorize");
 
-router.get('/', requireAuth, githubController.listRepos);
-router.get('/:repo/milestones', requireAuth, githubController.getMilestones);
 
+// Ver repositórios (free, regular, premium podem ver)
+router.get(
+    '/',
+    requireAuth,
+    authorize("milestones", "read"),
+    githubController.listRepos
+);
+
+// Ver milestones (free, regular, premium podem ver)
+router.get(
+    '/:repo/milestones',
+    requireAuth,
+    authorize("milestones", "read"),
+    githubController.getMilestones
+);
 
 module.exports = router;

@@ -1,4 +1,3 @@
-
 require('dotenv').config();
 
 const express = require('express');
@@ -9,6 +8,8 @@ const authRoutes = require('./routes/authRoutes');
 const sessionStore = require('./stores/sessionStore');
 const githubRoutes = require('./routes/githubRoutes');
 const taskRoutes = require('./routes/taskRoutes');
+const setupCasbin = require("./casbin/casbin");
+
 
 // Criar app Express
 const app = express();
@@ -21,19 +22,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(require("./middleware/tempSession"));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/auth', authRoutes);
+app.use('/github', githubRoutes);
+app.use('/tasks', taskRoutes);
 
 
 // Configurar views
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Servir ficheiros estáticos
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Rotas
-app.use('/auth', authRoutes);
-
-app.use('/github', githubRoutes);
+(async () => {
+    app.locals.enforcer = await setupCasbin();
+})();
 
 app.get('/', (req, res) => {
     const sid = req.cookies["session-id"];
@@ -42,7 +43,6 @@ app.get('/', (req, res) => {
     res.render('home', { user });
 });
 
-app.use('/tasks', taskRoutes);
 
 // Levantar servidor
 app.listen(PORT, () => {

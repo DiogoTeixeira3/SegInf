@@ -4,17 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f91828a-f5a7-47e4-910a-5743a9cb832b" name="Changes" comment="Logout, Github and Milestones Done">
-      <change afterPath="$PROJECT_DIR$/Ex5/controllers/taskController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ex5/middleware/tempSession.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ex5/routes/taskRoutes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ex5/views/selectList.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Ex5/views/taskSuccess.ejs" afterDir="false" />
+    <list default="true" id="5f91828a-f5a7-47e4-910a-5743a9cb832b" name="Changes" comment="Google task creation done">
+      <change afterPath="$PROJECT_DIR$/Ex5/casbin/casbin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex5/casbin/model.conf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex5/casbin/policy.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ex5/middleware/authorize.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ex5/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ex5/controllers/authControllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/controllers/authControllers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ex5/public/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/public/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex5/routes/authRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/routes/authRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex5/routes/githubRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/routes/githubRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex5/routes/taskRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/routes/taskRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex5/views/github.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/views/github.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex5/views/home.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/views/home.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Ex5/views/milestones.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/views/milestones.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex5/views/selectList.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/views/selectList.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex5/views/taskSuccess.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/views/taskSuccess.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +101,9 @@
       <workItem from="1764712672497" duration="321000" />
       <workItem from="1764717741847" duration="15000" />
       <workItem from="1764754011483" duration="24302000" />
-      <workItem from="1764839052155" duration="9441000" />
+      <workItem from="1764839052155" duration="10406000" />
+      <workItem from="1765319448232" duration="3163000" />
+      <workItem from="1765358693741" duration="685000" />
     </task>
     <task id="LOCAL-00001" summary="Login with Google Authentication">
       <option name="closed" value="true" />
@@ -123,7 +129,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764802645586</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Google task creation done">
+      <option name="closed" value="true" />
+      <created>1764854024818</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1764854024818</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -132,6 +146,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Login with Google Authentication" />
     <MESSAGE value="Logout, Github and Milestones Done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Logout, Github and Milestones Done" />
+    <MESSAGE value="Google task creation done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Google task creation done" />
   </component>
 </project>

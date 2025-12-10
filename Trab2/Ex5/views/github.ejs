@@ -16,7 +16,7 @@
                 <span class="nav-user">Olá, <strong><%= user.name %></strong></span>
                 <span class="role-badge role-<%= user.role %>"><%= user.role %></span>
                 <a href="/" class="nav-link">Home</a>
-                <a href="/logout" class="btn btn-outline">Logout</a>
+                <a href="/auth/logout" class="btn btn-outline">Logout</a>
             <% } else { %>
                 <a href="/auth/login" class="btn btn-primary">Login com Google</a>
             <% } %>

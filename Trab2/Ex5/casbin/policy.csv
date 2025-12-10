@@ -1,0 +1,14 @@
+# FREE
+p, free, milestones, read
+
+
+# REGULAR
+p, regular, milestones, read
+p, regular, tasks, create
+
+
+# PREMIUM
+p, premium, milestones, read
+p, premium, tasks, create
+p, premium, lists, select
+p, premium, lists, create
