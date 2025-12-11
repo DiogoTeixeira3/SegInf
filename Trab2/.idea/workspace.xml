@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5f91828a-f5a7-47e4-910a-5743a9cb832b" name="Changes" comment="Search for github repository done">
+      <change afterPath="$PROJECT_DIR$/Ex5/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex5/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex5/controllers/githubController.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/controllers/githubController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex5/routes/githubRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/routes/githubRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex5/views/github.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/Ex5/views/github.ejs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;MiguelMPinto&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DiogoTeixeira3/SegInf.git&quot;,
+    &quot;accountId&quot;: &quot;86f3eea1-2380-4e3d-b4cd-a47829356719&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="36J6waPVea7GVGwlJZbwwq3oLd4" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Node.js.app.js.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.authRoutes.js.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/pinto/Documents/5_semestre/SegInf/Trab/Trab2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2024.3.4.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\pinto\Documents\5_semestre\SegInf\Trab\Trab2\Ex5\middleware" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.25659.59" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.25659.59" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5f91828a-f5a7-47e4-910a-5743a9cb832b" name="Changes" comment="" />
+      <created>1764712568701</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1764712568701</updated>
+      <workItem from="1764712570818" duration="69000" />
+      <workItem from="1764712649685" duration="9000" />
+      <workItem from="1764712672497" duration="321000" />
+      <workItem from="1764717741847" duration="15000" />
+      <workItem from="1764754011483" duration="24302000" />
+      <workItem from="1764839052155" duration="10406000" />
+      <workItem from="1765319448232" duration="3163000" />
+      <workItem from="1765358693741" duration="1236000" />
+      <workItem from="1765362081466" duration="288000" />
+      <workItem from="1765370468013" duration="700000" />
+      <workItem from="1765402852963" duration="1537000" />
+    </task>
+    <task id="LOCAL-00001" summary="Login with Google Authentication">
+      <option name="closed" value="true" />
+      <created>1764776323167</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1764776323168</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Login with Google Authentication">
+      <option name="closed" value="true" />
+      <created>1764777214493</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1764777214493</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Logout, Github and Milestones Done">
+      <option name="closed" value="true" />
+      <created>1764802645586</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1764802645586</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Google task creation done">
+      <option name="closed" value="true" />
+      <created>1764854024818</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1764854024818</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Model RBAC implemented and some bugs fixed">
+      <option name="closed" value="true" />
+      <created>1765359648467</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1765359648467</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Login with Google Authentication" />
+    <MESSAGE value="Logout, Github and Milestones Done" />
+    <MESSAGE value="Google task creation done" />
+    <MESSAGE value="Model RBAC implemented and some bugs fixed" />
+    <MESSAGE value="Search for github repository done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Search for github repository done" />
+  </component>
+</project>

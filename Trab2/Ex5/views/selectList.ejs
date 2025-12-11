@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Escolher Lista</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div class="page">
+
+    <header class="header">
+        <div class="logo">GitTasks</div>
+        <nav class="nav">
+            <span class="nav-user">Olá, <strong><%= user.name %></strong></span>
+            <a href="/" class="nav-link">Home</a>
+            <a href="/github" class="nav-link">Repositórios</a>
+            <a href="/auth/logout" class="btn btn-outline">Logout</a>
+        </nav>
+    </header>
+
+    <main class="main center-content">
+
+        <section class="card success-card">
+
+            <h1>Escolha ou crie a lista</h1>
+
+            <form action="/tasks/select-list/action" method="POST">
+
+                <!-- Dados da milestone -->
+                <input type="hidden" name="repo" value="<%= repo %>">
+                <input type="hidden" name="title" value="<%= title %>">
+                <input type="hidden" name="due" value="<%= due %>">
+
+                <label for="taskListSelect">Lista existente:</label>
+                <select id="taskListSelect" name="existingListId">
+                    <% lists.forEach(list => { %>
+                        <option value="<%= list.id %>"><%= list.title %></option>
+                    <% }) %>
+                </select>
+
+                <hr style="margin:1.5rem 0; border-color:rgba(255,255,255,0.2);">
+
+                <label for="newListName">Ou criar lista nova:</label>
+                <input type="text" name="newListName" id="newListName" placeholder="Nome da nova lista">
+
+                <div style="margin-top:2rem; display:flex; gap:1rem;">
+
+                    <!-- Botão 1: usar lista existente -->
+                    <button
+                            class="btn btn-primary btn-lg"
+                            type="submit"
+                            name="action"
+                            value="use-existing">
+                        Criar Task
+                    </button>
+
+                    <!-- Botão 2: criar lista nova -->
+                    <button
+                            class="btn btn-outline btn-lg"
+                            type="submit"
+                            name="action"
+                            value="create-new">
+                        Criar Lista + Continuar
+                    </button>
+
+                </div>
+
+            </form>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

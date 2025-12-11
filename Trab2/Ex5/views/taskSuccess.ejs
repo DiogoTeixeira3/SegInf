@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Tarefa criada!</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div class="page">
+
+    <header class="header">
+        <div class="logo">GitTasks</div>
+        <nav class="nav">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/github" class="nav-link">Repositórios</a>
+            <a href="/auth/logout" class="btn btn-outline">Logout</a>
+        </nav>
+    </header>
+
+    <main class="main center-content">
+
+        <section class="card success-card">
+            <h1>Tarefa criada com sucesso!</h1>
+
+            <p><strong>Título:</strong> <%= task.title %></p>
+
+            <% if (task.due) { %>
+                <p><strong>Data limite:</strong> <%= task.due.substring(0, 10) %></p>
+            <% } %>
+
+            <a class="btn btn-primary btn-lg" href="/github">Voltar aos repositórios</a>
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>
