@@ -1,25 +1,47 @@
 const axios = require('axios');
+const sessionStore = require("../stores/sessionStore");
+
 
 const GITHUB_USER = "MiguelMPinto"; // <-- usa o teu username real
 
 exports.listRepos = async (req, res) => {
-    const user = req.user;
+    const user = req.user;   // 👈 FALTAVA ISTO
+
+    const sid = req.cookies["session-id"];
+    const session = sessionStore.get(sid);
+
+    const token = session?.githubAccessToken;
+
+    // ainda não ligou GitHub
+    if (!token) {
+        return res.render("github", {
+            user: user,
+            repos: [],
+            hasGithub: false
+        });
+    }
 
     try {
-        // API pública do GitHub
         const response = await axios.get(
-            `https://api.github.com/users/${GITHUB_USER}/repos`
+            "https://api.github.com/user/repos",
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: "application/vnd.github+json"
+                }
+            }
         );
 
-        const repos = response.data.map(repo => ({
-            name: repo.name,
-            private: repo.private
-        }));
+        const repos = response.data;
 
-        res.render('github', { user, repos });
+        res.render("github", {
+            user,
+            repos,
+            hasGithub: true
+        });
 
     } catch (err) {
-        console.error("GitHub error:", err);
+        console.error("GitHub error:", err?.response?.data || err);
         res.status(500).send("Erro ao obter repositórios do GitHub");
     }
 };
@@ -46,20 +68,32 @@ exports.getMilestones = async (req, res) => {
 exports.searchRepos = async (req, res) => {
     const query = req.query.q;
 
+    const sid = req.cookies["session-id"];
+    const session = sessionStore.get(sid);
+    const token = session?.githubAccessToken;
+
     if (!query) {
-        return res.render("github", { user: req.user, repos: [] });
+        return res.render("github", {
+            user: req.user,
+            repos: [],
+            hasGithub: !!token
+        });
     }
 
     try {
         const response = await axios.get(
-            `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}`
+            `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}`,
+            token
+                ? { headers: { Authorization: `Bearer ${token}` } }
+                : {}
         );
 
         const repos = response.data.items || [];
 
         res.render("github", {
             user: req.user,
-            repos
+            repos,
+            hasGithub: !!token
         });
 
     } catch (err) {

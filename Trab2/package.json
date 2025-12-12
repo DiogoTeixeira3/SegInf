@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "casbin": "^5.45.0"
+    "casbin": "^5.45.0",
+    "express-session": "^1.18.2"
   }
 }

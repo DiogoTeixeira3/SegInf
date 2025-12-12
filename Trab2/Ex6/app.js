@@ -26,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', authRoutes);
 app.use('/github', githubRoutes);
 app.use('/tasks', taskRoutes);
+app.use("/auth/github", require("./routes/githubAuthRoutes"));
 
 
 // Configurar views

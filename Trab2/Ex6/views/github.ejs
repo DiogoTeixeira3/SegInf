@@ -27,6 +27,18 @@
     <main class="main">
 
         <section class="card">
+            <% if (!hasGithub) { %>
+                <div style="margin-bottom: 1.5rem;">
+                    <a href="/auth/github/login" class="btn btn-github">
+                        Ligar GitHub
+                    </a>
+                    <p class="muted" style="margin-top:0.5rem;">
+                        Necessário para ver repositórios privados
+                    </p>
+                </div>
+            <% } %>
+
+
             <h1>Pesquisar Repositórios Públicos</h1>
 
             <!-- Caixa de pesquisa -->
